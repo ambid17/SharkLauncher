@@ -40,6 +40,11 @@ public class PlayerController : MonoBehaviour
 
     void MovePlayer()
     {
+        if (!PlayerManager.Instance.playerRunStats.HasStamina())
+        {
+            return;
+        }
+        
         Vector3 movement = Vector3.zero;
         if (Input.GetKey(KeyCode.A))
         {
@@ -50,8 +55,14 @@ public class PlayerController : MonoBehaviour
         {
             movement.x = PlayerManager.Instance.GetHorizontalSpeed();
         }
-        
-        _rigidbody.AddForce(movement, ForceMode.Force);
+
+        if (movement.magnitude > 0)
+        {
+            _rigidbody.AddForce(movement, ForceMode.Force);
+            PlayerManager.Instance.playerRunStats.UseStamina(Time.deltaTime);
+            
+            Debug.Log("used stamina: " + Time.deltaTime);
+        }
     }
 
     public void StartLaunch()

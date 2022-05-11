@@ -9,12 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1f92bfc9e118be439e71a72eb0be2c5, type: 3}
-  m_Name: PlayerUpgradeModel
+  m_Script: {fileID: 11500000, guid: 9a4f2ad670fda9743b9672e1461ea550, type: 3}
+  m_Name: PlayerRunStats
   m_EditorClassIdentifier: 
-  bounceUpgrades: 0
-  launchPowerUpgrades: 0
-  horizontalSpeedUpgrades: 0
-  maxBaseStamina: 100
-  staminaUpgrades: 0
-  staminaPerUpgrade: 15
+  currentStamina: 100

@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
-public class PlayerRunStats
+[Serializable]
+[CreateAssetMenu(fileName = "PlayerRunStats", menuName = "ScriptableObjects/PlayerRunStats", order = 1)]
+public class PlayerRunStats : ScriptableObject
 {
     public float currentStamina;
 

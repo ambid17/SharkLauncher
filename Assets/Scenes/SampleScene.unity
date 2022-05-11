@@ -1257,6 +1257,7 @@ MonoBehaviour:
   playerController: {fileID: 1366440272}
   followCamera: {fileID: 0}
   playerUpgrades: {fileID: 11400000, guid: e832a4609150c0e479a61003f872fb7e, type: 2}
+  playerRunStats: {fileID: 11400000, guid: 93ddb996fe0887a4cab3a12f1ad9370a, type: 2}
 --- !u!1 &2072774451
 GameObject:
   m_ObjectHideFlags: 0

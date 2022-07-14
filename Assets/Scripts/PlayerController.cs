@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private int lowPlatformForce = 1;
     private int mediumPlatformForce = 5;
     private int highPlatformForce = 15;
+    [SerializeField] private float killFloorY = -15;
     
     void Start()
     {
@@ -34,6 +35,7 @@ public class PlayerController : MonoBehaviour
         if (GameManager.Instance.GameState == GameState.Swimming)
         {
             MovePlayer();
+            CheckGameOver();
         }
         
     }
@@ -85,9 +87,9 @@ public class PlayerController : MonoBehaviour
     }
     
     
-    private void OnCollisionEnter(Collision other)
+    private void CheckGameOver()
     {
-        if (other.gameObject.layer == groundLayer)
+        if (transform.position.y <= killFloorY)
         {
             GameManager.Instance.SetState(GameState.GameOver);
         }

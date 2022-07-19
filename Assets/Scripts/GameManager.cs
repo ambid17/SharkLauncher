@@ -5,8 +5,6 @@ using UnityEngine;
 public enum GameState
 {
     StartMenu,
-    Launch,
-    Launching,
     Swimming,
     GameOver,
     Upgrading
@@ -19,14 +17,11 @@ public class GameManager : StaticMonoBehaviour<GameManager>
     private GameState _currentGameState;
     private Camera mainCamera;
 
-    private Vector3 startLaunchPosition;
-
     public GameState GameState => _currentGameState;
 
     void Start()
     {
         mainCamera = Camera.main;
-        startLaunchPosition = Vector3.zero;;
         SetState(GameState.StartMenu);
     }
 
@@ -37,74 +32,26 @@ public class GameManager : StaticMonoBehaviour<GameManager>
             return;
         }
         
-        if (_currentGameState == GameState.Launch)
-        {
-            TryStartLaunch();
-        }
-
-        if (_currentGameState == GameState.Launching)
-        {
-            TrackMouse();
-            TryLaunch();
-        }
-
-        if (_currentGameState == GameState.Swimming)
-        {
-            EndRun();
-        }
     }
 
     public void SetState(GameState newState)
     {
         switch (newState)
         {
-            case GameState.Launch:
-                PlayerManager.Instance.StartRun();
+            case GameState.StartMenu:
                 break;
             case GameState.Swimming:
-                PlayerManager.Instance.playerController.Launch();
+                PlayerManager.Instance.StartRun();
                 break;
             case GameState.GameOver:
                 EndRun();
                 break;
+            case GameState.Upgrading:
+                break;
         }
 
         _currentGameState = newState;
-    }
-
-    void TryStartLaunch()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Vector2 mousePos = Input.mousePosition;
-            Ray ray = mainCamera.ScreenPointToRay(mousePos);
-            if (Physics.Raycast(ray, out RaycastHit hit, sharkLayerMask))
-            {
-                startLaunchPosition = mainCamera.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, PlayerManager.Instance.playerController.transform.position.z));
-                SetState(GameState.Launching);
-            }
-        }
-    }
-
-    void TrackMouse()
-    {
-        if (Input.GetMouseButton(0))
-        {
-            float zOffset = Mathf.Abs(mainCamera.transform.position.z -
-                                      PlayerManager.Instance.playerController.transform.position.z);
-            Vector2 mousePos = Input.mousePosition;
-            Vector3 currentLaunchPosition = mainCamera.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, zOffset));
-            PlayerManager.Instance.playerController.UpdateLaunchPosition(currentLaunchPosition);
-        }
-    }
-    
-    void TryLaunch()
-    {
-        if (Input.GetMouseButtonUp(0))
-        {
-            SetState(GameState.Swimming);
-        }
-    }
+    }   
 
     void EndRun()
     {

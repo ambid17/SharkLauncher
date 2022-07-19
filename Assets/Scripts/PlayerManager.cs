@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,20 +15,35 @@ public class PlayerManager : StaticMonoBehaviour<PlayerManager>
         playerRunStats = new PlayerRunStats();
     }
 
+    private void Update()
+    {
+        if (GameManager.Instance.GameState != GameState.Swimming)
+        {
+            return;
+        }
+        CheckGameOver();
+    }
+
     public void StartRun()
     {
-        playerRunStats.currentStamina = playerUpgrades.maxBaseStamina + (playerUpgrades.staminaPerUpgrade * playerUpgrades.staminaUpgrades);
-        playerController.StartLaunch();
+        playerRunStats.currentStamina = GetMaxStamina();
     }
 
-
-    public float GetLaunchPower()
+    public float GetMaxStamina()
     {
-        return (1 + playerUpgrades.launchPowerUpgrades) * 10;
+        return playerUpgrades.maxBaseStamina + (playerUpgrades.staminaPerUpgrade * playerUpgrades.staminaUpgrades);
+    }
+    
+    private void CheckGameOver()
+    {
+        if (playerRunStats.currentStamina <= 0)
+        {
+            GameManager.Instance.SetState(GameState.GameOver);
+        }
     }
 
-    public float GetHorizontalSpeed()
+    public float GetSpeed()
     {
-        return 5 + (2 * playerUpgrades.horizontalSpeedUpgrades);
+        return 5 + (2 * playerUpgrades.speedUpgrades);
     }
 }

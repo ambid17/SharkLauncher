@@ -5,123 +5,53 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private GameObject sharkModel;
+    [SerializeField] private float rotationSpeed;
     private Rigidbody _rigidbody;
 
-    private Vector3 startPosition;
-
-    private int platformLayer = 7;
+    private int fishLayer = 7;
     private int groundLayer = 7;
 
-    private int lowPlatformForce = 1;
-    private int mediumPlatformForce = 5;
-    private int highPlatformForce = 15;
-    [SerializeField] private float killFloorY = -15;
-    
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        _rigidbody.isKinematic = true;
-        _rigidbody.MovePosition(Vector3.zero);
-        startPosition = Vector3.zero;
     }
 
     void Update()
     {
-        if (GameManager.Instance.GameState == GameState.GameOver)
+        if (GameManager.Instance.GameState != GameState.Swimming)
         {
             return;
         }
-
-        if (GameManager.Instance.GameState == GameState.Swimming)
-        {
-            MovePlayer();
-            CheckGameOver();
-        }
         
+        MovePlayer();
+        PlayerManager.Instance.playerRunStats.UseStamina(Time.deltaTime);
     }
 
     void MovePlayer()
     {
-        if (!PlayerManager.Instance.playerRunStats.HasStamina())
-        {
-            return;
-        }
-        
-        Vector3 movement = Vector3.zero;
-        if (Input.GetKey(KeyCode.A))
-        {
-            movement.x = -PlayerManager.Instance.GetHorizontalSpeed();
-        }
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
 
-        if (Input.GetKey(KeyCode.D))
+        Vector3 movement = new Vector3(horizontal, vertical, 0);
+        movement.Normalize();
+        movement *= PlayerManager.Instance.GetSpeed();
+
+        _rigidbody.AddForce(movement);
+
+        if (movement != Vector3.zero)
         {
-            movement.x = PlayerManager.Instance.GetHorizontalSpeed();
-        }
-
-        if (movement.magnitude > 0)
-        {
-            _rigidbody.AddForce(movement, ForceMode.Force);
-            PlayerManager.Instance.playerRunStats.UseStamina(Time.deltaTime);
-            
-            Debug.Log("used stamina: " + Time.deltaTime);
-        }
-    }
-
-    public void StartLaunch()
-    {
-        _rigidbody.isKinematic = true;
-        _rigidbody.MovePosition(Vector3.zero);
-        startPosition = Vector3.zero;
-    }
-
-    public void Launch()
-    {
-        Vector3 offsetForce = -transform.position * PlayerManager.Instance.GetLaunchPower();
-        _rigidbody.isKinematic = false;
-        _rigidbody.AddForce(offsetForce, ForceMode.VelocityChange);
-    }
-
-    public void UpdateLaunchPosition(Vector3 newPos)
-    {
-        _rigidbody.MovePosition(newPos);
-    }
-    
-    
-    private void CheckGameOver()
-    {
-        if (transform.position.y <= killFloorY)
-        {
-            GameManager.Instance.SetState(GameState.GameOver);
+            Quaternion targetRotation = Quaternion.LookRotation(movement);
+            targetRotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            _rigidbody.MoveRotation(targetRotation);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == platformLayer)
+        if (other.gameObject.layer == fishLayer)
         {
-            Platform platform = other.gameObject.GetComponent<Platform>();
-            AddPlatformForce(platform.platformType);
             Destroy(other.gameObject);
         }
-    }
-
-    private void AddPlatformForce(PlatformType platformType)
-    {
-        Vector3 forceToAdd = Vector3.zero;
-
-        if (platformType == PlatformType.Low)
-        {
-            forceToAdd = new Vector3(0, lowPlatformForce, 0);
-        }
-        else if (platformType == PlatformType.Medium)
-        {
-            forceToAdd = new Vector3(0, mediumPlatformForce, 0);
-        }
-        else if (platformType == PlatformType.High)
-        {
-            forceToAdd = new Vector3(0, highPlatformForce, 0);
-        }
-        
-        _rigidbody.AddForce(forceToAdd);
     }
 }

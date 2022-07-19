@@ -29,7 +29,7 @@ public class UIManager : StaticMonoBehaviour<UIManager>
 
     private void StartGame()
     {
-        GameManager.Instance.SetState(GameState.Launch);
+        GameManager.Instance.SetState(GameState.Swimming);
         startMenu.gameObject.SetActive(false);
         upgradeMenu.gameObject.SetActive(false);
     }
@@ -42,7 +42,7 @@ public class UIManager : StaticMonoBehaviour<UIManager>
     public void FinishUpgrading()
     {
         upgradeMenu.gameObject.SetActive(false);
-        GameManager.Instance.SetState(GameState.Launch);
+        GameManager.Instance.SetState(GameState.Swimming);
     }
     
 }

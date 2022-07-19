@@ -8,12 +8,7 @@ using UnityEngine;
 public class PlayerUpgradeModel : ScriptableObject
 {
     [SerializeField]
-    public int bounceUpgrades;
-    [SerializeField]
-    public int launchPowerUpgrades;
-    [SerializeField]
-    public int horizontalSpeedUpgrades;
-    
+    public int speedUpgrades;
     [SerializeField]
     public int maxBaseStamina;
     [SerializeField]

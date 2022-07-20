@@ -1,16 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UpgradeMenuUI : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] private Button playAgainButton;
+    
     void Start()
     {
-        
+        playAgainButton.onClick.AddListener(UIManager.Instance.FinishUpgrading);
     }
 
-    // Update is called once per frame
     void Update()
     {
         

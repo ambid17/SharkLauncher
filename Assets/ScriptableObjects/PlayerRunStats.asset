@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: PlayerRunStats
   m_EditorClassIdentifier: 
   currentStamina: 100
+  staminaDrainMultiplier: 1

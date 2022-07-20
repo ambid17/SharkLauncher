@@ -12,7 +12,6 @@ public class PlayerManager : StaticMonoBehaviour<PlayerManager>
     
     void Start()
     {
-        playerRunStats = new PlayerRunStats();
     }
 
     private void Update()
@@ -26,6 +25,7 @@ public class PlayerManager : StaticMonoBehaviour<PlayerManager>
 
     public void StartRun()
     {
+        playerController.StartRun();
         playerRunStats.currentStamina = GetMaxStamina();
     }
 

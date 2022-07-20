@@ -9,10 +9,12 @@ using UnityEngine;
 public class PlayerRunStats : ScriptableObject
 {
     public float currentStamina;
+    public float staminaDrainMultiplier;
 
     public PlayerRunStats()
     {
-        currentStamina = 100;
+        currentStamina = 5;
+        staminaDrainMultiplier = 1;
     }
     
     public PlayerRunStats(float maxStamina)
@@ -25,8 +27,8 @@ public class PlayerRunStats : ScriptableObject
         return currentStamina > 0;
     }
 
-    public void UseStamina(float staminaUsed)
+    public void UseStamina()
     {
-        currentStamina -= staminaUsed;
+        currentStamina -= Time.deltaTime * staminaDrainMultiplier;
     }
 }

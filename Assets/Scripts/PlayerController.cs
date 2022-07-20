@@ -25,7 +25,15 @@ public class PlayerController : MonoBehaviour
         }
         
         MovePlayer();
-        PlayerManager.Instance.playerRunStats.UseStamina(Time.deltaTime);
+        PlayerManager.Instance.playerRunStats.UseStamina();
+    }
+
+    public void StartRun()
+    {
+        _rigidbody.isKinematic = true;
+        transform.position = Vector3.zero;
+        transform.rotation = Quaternion.identity;
+        _rigidbody.isKinematic = false;
     }
 
     void MovePlayer()

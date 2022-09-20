@@ -863,6 +863,7 @@ GameObject:
   - component: {fileID: 2016247967}
   - component: {fileID: 2016247966}
   - component: {fileID: 2016247968}
+  - component: {fileID: 2016247969}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -915,6 +916,19 @@ MonoBehaviour:
   followCamera: {fileID: 0}
   playerUpgrades: {fileID: 11400000, guid: e832a4609150c0e479a61003f872fb7e, type: 2}
   playerRunStats: {fileID: 11400000, guid: 93ddb996fe0887a4cab3a12f1ad9370a, type: 2}
+--- !u!114 &2016247969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2016247965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8602697ee73a24891f4b4cf9bf9b70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fishPrefabs: []
 --- !u!1 &2122688538
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a4f2ad670fda9743b9672e1461ea550, type: 3}
   m_Name: PlayerRunStats
   m_EditorClassIdentifier: 
-  currentStamina: 100
-  staminaDrainMultiplier: 1
+  currentStamina: 26.17222
+  staminaDrainMultiplier: 20
